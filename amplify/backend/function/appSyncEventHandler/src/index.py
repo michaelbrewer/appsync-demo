@@ -32,7 +32,7 @@ LOCATIONS = [
 def get_location(location_id: str = ""):
     logger.info(f"Fetching location by id: {location_id}")
     for location in LOCATIONS:
-        if location["locationID"] == id:
+        if location["locationID"] == location_id:
             return location
 
     raise ValueError("Not found")
