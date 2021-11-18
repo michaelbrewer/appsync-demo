@@ -1,0 +1,33 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "logLevel",
+      "environmentVariableName": "LOG_LEVEL"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsServiceName",
+      "environmentVariableName": "POWERTOOLS_SERVICE_NAME"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsMetricsNamespace",
+      "environmentVariableName": "POWERTOOLS_METRICS_NAMESPACE"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsTraceMiddlewares",
+      "environmentVariableName": "POWERTOOLS_TRACE_MIDDLEWARES"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsTracerCaptureResponse",
+      "environmentVariableName": "POWERTOOLS_TRACER_CAPTURE_RESPONSE"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsTracerCaptureError",
+      "environmentVariableName": "POWERTOOLS_TRACER_CAPTURE_ERROR"
+    },
+    {
+      "cloudFormationParameterName": "powertoolsLoggerLogEvent",
+      "environmentVariableName": "POWERTOOLS_LOGGER_LOG_EVENT"
+    }
+  ]
+}
