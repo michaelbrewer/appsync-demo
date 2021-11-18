@@ -161,7 +161,27 @@
               ]
             }
           ]
-        }
+        },
+        "Policies": [
+          {
+            "PolicyName": "merchant-information-lambda-xray-policy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "xray:PutTraceSegments",
+                    "xray:PutTelemetryRecords"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+
       }
     },
     "lambdaexecutionpolicy": {
