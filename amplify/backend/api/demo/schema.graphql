@@ -19,18 +19,6 @@ type Location {
 
   # Billing flag of V = ValueLink or C = Clover
   billingFlag: String
-
-  # Banking details
-  bank: Bank
-
-  # Address details
-  address: Address
-
-  # List of contacts
-  contactInfo: [ContactInfo]
-
-  # Program type determined from the billingFlag
-  programType: ProgramType
 }
 
 type Query {
