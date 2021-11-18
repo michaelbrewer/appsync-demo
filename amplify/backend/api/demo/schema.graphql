@@ -3,3 +3,37 @@ type Todo @model {
   name: String!
   description: String
 }
+
+type Location {
+  # Location id also known as gateway mid
+  locationID: String!
+
+  # Merchant id also know as closed loop mid
+  merchantId: String
+
+  # Location name
+  name: String
+
+  # Whether this location is enabled for processing
+  enabled: Boolean!
+
+  # Billing flag of V = ValueLink or C = Clover
+  billingFlag: String
+
+  # Banking details
+  bank: Bank
+
+  # Address details
+  address: Address
+
+  # List of contacts
+  contactInfo: [ContactInfo]
+
+  # Program type determined from the billingFlag
+  programType: ProgramType
+}
+
+type Query {
+  # List of locations fetched via XML API
+  listLocations: [Location] @function(name: "appSyncEventHandler-${env}")
+}
