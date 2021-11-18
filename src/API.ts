@@ -75,6 +75,15 @@ export type DeleteTodoInput = {
   id: string,
 };
 
+export type Location = {
+  __typename: "Location",
+  locationID: string,
+  merchantId?: string | null,
+  name?: string | null,
+  enabled: boolean,
+  billingFlag?: string | null,
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -152,6 +161,17 @@ export type DeleteTodoMutation = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type ListLocationsQuery = {
+  listLocations?:  Array< {
+    __typename: "Location",
+    locationID: string,
+    merchantId?: string | null,
+    name?: string | null,
+    enabled: boolean,
+    billingFlag?: string | null,
+  } | null > | null,
 };
 
 export type GetTodoQueryVariables = {

@@ -20,7 +20,9 @@
           "powertoolsTraceMiddlewares": "true",
           "powertoolsTracerCaptureResponse": "true",
           "powertoolsTracerCaptureError": "true",
-          "powertoolsLoggerLogEvent": "true"
+          "powertoolsLoggerLogEvent": "true",
+          "deploymentBucketName": "amplify-demo-dev-10810-deployment",
+          "s3Key": "amplify-builds/appSyncEventHandler-642b4e47417174393345-build.zip"
         }
       }
     }

@@ -2,6 +2,17 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const listLocations = /* GraphQL */ `
+  query ListLocations {
+    listLocations {
+      locationID
+      merchantId
+      name
+      enabled
+      billingFlag
+    }
+  }
+`;
 export const getTodo = /* GraphQL */ `
   query GetTodo($id: ID!) {
     getTodo(id: $id) {
