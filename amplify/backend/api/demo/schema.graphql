@@ -5,23 +5,16 @@ type Todo @model {
 }
 
 type Location {
-  # Location id also known as gateway mid
   locationID: String!
-
-  # Merchant id also know as closed loop mid
   merchantId: String
-
-  # Location name
   name: String
-
-  # Whether this location is enabled for processing
   enabled: Boolean!
-
-  # Billing flag of V = ValueLink or C = Clover
-  billingFlag: String
+  creationTime: AWSDateTime
+  # Resolves to `common_field`
+  commonField: String  @function(name: "appSyncEventHandler-${env}")
 }
 
 type Query {
-  # List of locations fetched via XML API
   listLocations: [Location] @function(name: "appSyncEventHandler-${env}")
+  getLocation: Location @function(name: "appSyncEventHandler-${env}")
 }
