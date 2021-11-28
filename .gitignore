@@ -21,3 +21,5 @@ amplifytools.xcconfig
 
 # Ignore idea
 .idea/
+# Ignore osx stuff
+.DS_Store
