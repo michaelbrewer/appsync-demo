@@ -6,7 +6,6 @@ from aws_lambda_powertools.utilities.data_classes.appsync import scalar_types_ut
 logger = Logger()
 tracer = Tracer()
 app = AppSyncResolver()
-
 LOCATIONS = [
     {
         "locationID": "foo",
@@ -43,7 +42,6 @@ def list_locations():
 
 @app.resolver(field_name="commonField")
 def common_field():
-    # Would match all fieldNames matching 'commonField'
     return scalar_types_utils.make_id()
 
 
