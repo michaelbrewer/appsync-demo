@@ -2,7 +2,6 @@ type Todo @model {
   id: ID!
   name: String!
   description: String
-  # Resolves to `common_field`
   commonField: String  @function(name: "appSyncEventHandler-${env}")
 }
 
@@ -11,9 +10,8 @@ type Location {
   merchantId: String
   name: String
   enabled: Boolean!
-  creationTime: AWSDateTime
-  # Resolves to `common_field`
   commonField: String  @function(name: "appSyncEventHandler-${env}")
+  creationTime: AWSDateTime
 }
 
 type Query {
