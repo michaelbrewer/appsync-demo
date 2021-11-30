@@ -15,7 +15,7 @@
       "function": {
         "appSyncEventHandler": {
           "logLevel": "DEBUG",
-          "powertoolsServiceName": "demo",
+          "powertoolsServiceName": "demoApp",
           "powertoolsMetricsNamespace": "serverless",
           "powertoolsTraceMiddlewares": "true",
           "powertoolsTracerCaptureResponse": "true",
