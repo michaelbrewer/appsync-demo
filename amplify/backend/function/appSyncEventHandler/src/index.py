@@ -10,6 +10,7 @@ LOCATIONS = [
     {
         "locationID": "foo",
         "enabled": True,
+        "merchantId": scalar_types_utils.make_id(),
         "name": "Brew house",
         "description": "String",
         "creationTime": scalar_types_utils.aws_datetime(),  # type AWSDateTime
@@ -17,6 +18,7 @@ LOCATIONS = [
     {
         "locationID": scalar_types_utils.make_id(),
         "name": "Another one",
+        "merchantId": scalar_types_utils.make_id(),
         "enabled": False,
         "description": "String",
         "done": True,
