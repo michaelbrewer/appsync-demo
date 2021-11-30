@@ -19,9 +19,9 @@ class User:
 
 def get_user_by_token(token: str) -> Optional[User]:
     """Look a user by token"""
-    if token not in "admin":
+    if token not in ("admin", "foo"):
         return None
-    return User("foo", True)
+    return User("foo", token == "admin")
 
 
 @logger.inject_lambda_context(correlation_id_path=correlation_paths.APPSYNC_AUTHORIZER)
