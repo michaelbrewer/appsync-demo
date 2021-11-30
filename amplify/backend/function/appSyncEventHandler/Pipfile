@@ -4,10 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-aws-lambda-powertools = "*"
-aws-xray-sdk = "*"
 
 [dev-packages]
+aws-lambda-powertools = "*"
+aws-xray-sdk = "*"
 
 [requires]
 python_version = "3.8"
