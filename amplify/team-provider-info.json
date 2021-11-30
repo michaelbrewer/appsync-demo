@@ -1,5 +1,5 @@
 {
-  "develop": {
+  "dev": {
     "categories": {
       "function": {
         "appSyncEventHandler": {
@@ -9,7 +9,7 @@
           "powertoolsTraceMiddlewares": "true",
           "powertoolsTracerCaptureResponse": "true",
           "powertoolsTracerCaptureError": "true",
-          "powertoolsLoggerLogEvent": "true",
+          "powertoolsLoggerLogEvent": "true"
         }
       }
     }
