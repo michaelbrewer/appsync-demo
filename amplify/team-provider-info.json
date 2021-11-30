@@ -1,0 +1,30 @@
+{
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-demo-main-35223-authRole",
+      "UnauthRoleArn": "arn:aws:iam::254688924456:role/amplify-demo-main-35223-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::254688924456:role/amplify-demo-main-35223-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-demo-main-35223-deployment",
+      "UnauthRoleName": "amplify-demo-main-35223-unauthRole",
+      "StackName": "amplify-demo-main-35223",
+      "StackId": "arn:aws:cloudformation:us-west-2:254688924456:stack/amplify-demo-main-35223/ed7a2bb0-5190-11ec-aa9a-02a6cd2b3a09",
+      "AmplifyAppId": "d15v37v70g4rqb"
+    },
+    "categories": {
+      "function": {
+        "appSyncEventHandler": {
+          "logLevel": "DEBUG",
+          "powertoolsServiceName": "demoApp",
+          "powertoolsMetricsNamespace": "serverless",
+          "powertoolsTraceMiddlewares": "true",
+          "powertoolsTracerCaptureResponse": "true",
+          "powertoolsTracerCaptureError": "true",
+          "powertoolsLoggerLogEvent": "true",
+          "deploymentBucketName": "amplify-demo-main-35223-deployment",
+          "s3Key": "amplify-builds/appSyncEventHandler-65424b70525353703058-build.zip"
+        }
+      }
+    }
+  }
+}
