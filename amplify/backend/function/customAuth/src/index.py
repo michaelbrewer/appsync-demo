@@ -26,7 +26,7 @@ def get_user_by_token(token: str) -> Optional[User]:
 
 @logger.inject_lambda_context(correlation_id_path=correlation_paths.APPSYNC_AUTHORIZER)
 @event_source(data_class=AppSyncAuthorizerEvent)
-def lambda_handler(event: AppSyncAuthorizerEvent, context) -> Dict:
+def handler(event: AppSyncAuthorizerEvent, context) -> Dict:
     user = get_user_by_token(event.authorization_token)
 
     if not user:
