@@ -12,7 +12,7 @@ logger = Logger()
 
 
 class User:
-    def __init(self, user_id: str, is_admin: bool):
+    def __init__(self, user_id: str, is_admin: bool):
         self.id = user_id
         self.is_admin = is_admin
 
