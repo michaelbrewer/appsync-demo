@@ -12,25 +12,32 @@
       "Type": "String"
     },
     "logLevel": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "DEBUG"
     },
     "powertoolsServiceName": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "demoApp"
     },
     "powertoolsMetricsNamespace": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "serverless"
     },
     "powertoolsTraceMiddlewares": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "true"
     },
     "powertoolsTracerCaptureResponse": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "true"
     },
     "powertoolsTracerCaptureError": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "true"
     },
     "powertoolsLoggerLogEvent": {
-      "Type": "String"
+      "Type": "String",
+      "Default": "true"
     }
   },
   "Conditions": {
