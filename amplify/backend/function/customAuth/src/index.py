@@ -37,5 +37,5 @@ def handler(event: AppSyncAuthorizerEvent, context) -> Dict:
         authorize=True,
         resolver_context={"id": user.id},
         # Only allow admins to delete events
-        deny_fields=None if user.is_admin else ["Mutation.deleteEvent"],
+        deny_fields=None if user.is_admin else ["Mutation.deleteTodo"],
     ).asdict()
