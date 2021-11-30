@@ -1,229 +1,259 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Lambda Function resource stack creation using Amplify CLI",
-    "Parameters": {
-        "deploymentBucketName": {
-            "Type": "String"
-        },
-        "env": {
-            "Type": "String"
-        },
-        "s3Key": {
-            "Type": "String"
-        },
-        "logLevel": {
-            "Type": "String",
-            "Default": "DEBUG"
-          },
-          "powertoolsServiceName": {
-            "Type": "String",
-            "Default": "authService"
-          },
-          "powertoolsMetricsNamespace": {
-            "Type": "String",
-            "Default": "serverless"
-          },
-          "powertoolsTraceMiddlewares": {
-            "Type": "String",
-            "Default": "true"
-          },
-          "powertoolsTracerCaptureResponse": {
-            "Type": "String",
-            "Default": "true"
-          },
-          "powertoolsTracerCaptureError": {
-            "Type": "String",
-            "Default": "true"
-          },
-          "powertoolsLoggerLogEvent": {
-            "Type": "String",
-            "Default": "true"
-          }      
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Parameters": {
+    "deploymentBucketName": {
+      "Type": "String"
     },
-    "Conditions": {
-        "ShouldNotCreateEnvResources": {
-            "Fn::Equals": [
-                {
-                    "Ref": "env"
-                },
-                "NONE"
-            ]
-        }
+    "env": {
+      "Type": "String"
     },
-    "Resources": {
-        "LambdaFunction": {
-          "Type": "AWS::Lambda::Function",
-          "Metadata": {
-            "aws:asset:path": "./src",
-            "aws:asset:property": "Code"
-          },
-          "Properties": {
-            "Code": {
-                "S3Bucket": {
-                    "Ref": "deploymentBucketName"
-                },
-                "S3Key": {
-                    "Ref": "s3Key"
-                }
-            },
-            "Handler": "index.handler",
-            "FunctionName": {
-                "Fn::If": [
-                    "ShouldNotCreateEnvResources",
-                    "customAuth",
-                    {
-
-                        "Fn::Join": [
-                            "",
-                            [
-                                "customAuth",
-                                "-",
-                                {
-                                    "Ref": "env"
-                                }
-                            ]
-                        ]
-                    }
-                ]
-            },
-            "Environment": {
-                "Variables" : {
-                    "ENV":{
-                        "Ref":"env"
-                    },
-                    "REGION":{
-                        "Ref":"AWS::Region"
-                    },
-                    "LOG_LEVEL": {
-                        "Ref": "logLevel"
-                    },
-                    "POWERTOOLS_SERVICE_NAME": {
-                        "Ref": "powertoolsServiceName"
-                    },
-                    "POWERTOOLS_METRICS_NAMESPACE": {
-                        "Ref": "powertoolsMetricsNamespace"
-                    },
-                    "POWERTOOLS_TRACE_MIDDLEWARES": {
-                        "Ref": "powertoolsTraceMiddlewares"
-                    },
-                    "POWERTOOLS_TRACER_CAPTURE_RESPONSE": {
-                        "Ref": "powertoolsTracerCaptureResponse"
-                    },
-                    "POWERTOOLS_TRACER_CAPTURE_ERROR": {
-                        "Ref": "powertoolsTracerCaptureError"
-                    },
-                    "POWERTOOLS_LOGGER_LOG_EVENT": {
-                        "Ref": "powertoolsLoggerLogEvent"
-                    }          
-                }
-            },
-            "Role": { "Fn::GetAtt": ["LambdaExecutionRole", "Arn"] },
-            "Runtime": "python3.8",
-            "Layers": ["arn:aws:lambda:us-west-2:017000801446:layer:AWSLambdaPowertoolsPython:4"],
-            "Timeout": 25,
-            "MemorySize": 1024,
-            "TracingConfig": {
-              "Mode": "Active"
-            }
-        }
-        },
-        "LambdaExecutionRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName": {
-                    "Fn::If": [
-                        "ShouldNotCreateEnvResources",
-                        "appsyncdemoLambdaRole9455eb87",
-                        {
-
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "appsyncdemoLambdaRole9455eb87",
-                                    "-",
-                                    {
-                                        "Ref": "env"
-                                    }
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "lambda.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
-                            ]
-                        }
-                    ]
-                },
-                "Policies": [
-                    {
-                        "PolicyName": "merchant-information-lambda-xray-policy",
-                        "PolicyDocument": {
-                            "Version": "2012-10-17",
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "xray:PutTraceSegments",
-                                        "xray:PutTelemetryRecords"
-                                    ],
-                                    "Resource": "*"
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        }
-        ,"lambdaexecutionpolicy": {
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "lambda-execution-policy",
-                "Roles": [{ "Ref": "LambdaExecutionRole" }],
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Action": ["logs:CreateLogGroup",
-                            "logs:CreateLogStream",
-                            "logs:PutLogEvents"],
-                            "Resource": { "Fn::Sub": [ "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*", { "region": {"Ref": "AWS::Region"}, "account": {"Ref": "AWS::AccountId"}, "lambda": {"Ref": "LambdaFunction"}} ]}
-                        }
-                    ]
-                }
-            }
-        }
+    "s3Key": {
+      "Type": "String"
     },
-    "Outputs": {
-        "Name": {
-            "Value": {
-                "Ref": "LambdaFunction"
-            }
-        },
-        "Arn": {
-            "Value": {"Fn::GetAtt": ["LambdaFunction", "Arn"]}
-        },
-        "Region": {
-            "Value": {
-                "Ref": "AWS::Region"
-            }
-        },
-        "LambdaExecutionRole": {
-            "Value": {
-                "Ref": "LambdaExecutionRole"
-            }
-        }
-        
+    "logLevel": {
+      "Type": "String",
+      "Default": "DEBUG"
+    },
+    "powertoolsServiceName": {
+      "Type": "String",
+      "Default": "authService"
+    },
+    "powertoolsMetricsNamespace": {
+      "Type": "String",
+      "Default": "serverless"
+    },
+    "powertoolsTraceMiddlewares": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "powertoolsTracerCaptureResponse": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "powertoolsTracerCaptureError": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "powertoolsLoggerLogEvent": {
+      "Type": "String",
+      "Default": "true"
     }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
+        },
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "customAuth",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "customAuth",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "LOG_LEVEL": {
+              "Ref": "logLevel"
+            },
+            "POWERTOOLS_SERVICE_NAME": {
+              "Ref": "powertoolsServiceName"
+            },
+            "POWERTOOLS_METRICS_NAMESPACE": {
+              "Ref": "powertoolsMetricsNamespace"
+            },
+            "POWERTOOLS_TRACE_MIDDLEWARES": {
+              "Ref": "powertoolsTraceMiddlewares"
+            },
+            "POWERTOOLS_TRACER_CAPTURE_RESPONSE": {
+              "Ref": "powertoolsTracerCaptureResponse"
+            },
+            "POWERTOOLS_TRACER_CAPTURE_ERROR": {
+              "Ref": "powertoolsTracerCaptureError"
+            },
+            "POWERTOOLS_LOGGER_LOG_EVENT": {
+              "Ref": "powertoolsLoggerLogEvent"
+            }
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.8",
+        "Layers": [
+          "arn:aws:lambda:us-west-2:017000801446:layer:AWSLambdaPowertoolsPython:4"
+        ],
+        "Timeout": 25,
+        "MemorySize": 1024,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "appsyncdemoLambdaRole9455eb87",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "appsyncdemoLambdaRole9455eb87",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "merchant-information-lambda-xray-policy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "xray:PutTraceSegments",
+                    "xray:PutTelemetryRecords"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    }
+  }
 }

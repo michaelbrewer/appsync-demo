@@ -22,7 +22,11 @@
           "powertoolsTracerCaptureError": "true",
           "powertoolsLoggerLogEvent": "true",
           "deploymentBucketName": "amplify-demo-main-35223-deployment",
-          "s3Key": "amplify-builds/appSyncEventHandler-35374c74666d77516e6e-build.zip"
+          "s3Key": "amplify-builds/appSyncEventHandler-7a5a6535725556366555-build.zip"
+        },
+        "customAuth": {
+          "deploymentBucketName": "amplify-demo-main-35223-deployment",
+          "s3Key": "amplify-builds/customAuth-6c596e7936356a694d71-build.zip"
         }
       }
     }
